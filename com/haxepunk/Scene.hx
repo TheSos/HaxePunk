@@ -115,6 +115,10 @@ class Scene extends Tweener
 		return b - a;
 	}
 
+	public function pre_render() { }
+	
+	public function post_render() { }
+	
 	/**
 	 * Performed by the game loop, renders all contained Entities.
 	 * If you override this to give your Scene render code, remember
@@ -125,6 +129,7 @@ class Scene extends Tweener
 		if (HXP.renderMode == RenderMode.HARDWARE)
 			AtlasData.startScene(this);
 
+		pre_render();
 		// render the entities in order of depth
 		for (layer in _layerList)
 		{
@@ -134,6 +139,8 @@ class Scene extends Tweener
 				if (e.visible) e.render();
 			}
 		}
+		
+		post_render();
 
 		if (HXP.renderMode == RenderMode.HARDWARE)
 			AtlasData.active = null; // forces the last active atlas to flush
